@@ -1,8 +1,10 @@
 import { configureStore } from "@reduxjs/toolkit";
-import counterSlice from "./counterSlice";
+import fetchStylePropertySlice from "../reducer/reducer";
+
 const store = configureStore({
 	reducer: {
-		counter: counterSlice.reducer,
+		fetchStyleProperty: fetchStylePropertySlice.reducer,
 	},
 });
+
 export default store;
