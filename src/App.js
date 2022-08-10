@@ -1,13 +1,22 @@
-import React from "react";
-import "./App.css";
+import React, { useState, useEffect } from "react";
+import { createStore } from "redux";
 import { Provider, useSelector, useDispatch } from "react-redux";
 import store from "./store";
 import { up } from "./counterSlice";
+import { asyncUpFetch } from "./counterSlice";
 
 function Counter() {
 	const dispatch = useDispatch();
+
+	useEffect(() => {
+		dispatch(asyncUpFetch());
+	}, [dispatch]);
+
 	const count = useSelector((state) => {
 		return state.counter.value;
+	});
+	const status = useSelector((state) => {
+		return state.counter.status;
 	});
 	return (
 		<div>
@@ -18,12 +27,23 @@ function Counter() {
 			>
 				+
 			</button>
-			{count}
+
+			<button
+				onClick={() => {
+					dispatch(asyncUpFetch());
+				}}
+			>
+				+ async fetch
+			</button>
+			<br />
+
+			<div>
+				{count} | {status}
+			</div>
 		</div>
 	);
 }
-
-function App() {
+export default function App() {
 	return (
 		<Provider store={store}>
 			<div>
@@ -32,5 +52,3 @@ function App() {
 		</Provider>
 	);
 }
-
-export default App;
